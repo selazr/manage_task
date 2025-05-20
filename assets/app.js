@@ -1,4 +1,5 @@
 import './bootstrap.js';
+import './styles/global.scss'; 
 /*
  * Welcome to your app's main JavaScript file!
  *

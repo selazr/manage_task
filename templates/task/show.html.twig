@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Detalls de la Tasca - {{ task.title }}{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    <div class="card shadow rounded-4">
+        <div class="card-header bg-primary text-white rounded-top-4">
+            <h2 class="mb-0">{{ task.title }}</h2>
+        </div>
+
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-4">Contingut:</dt>
+                <dd class="col-sm-8">{{ task.content }}</dd>
+
+                <dt class="col-sm-4">Prioritat:</dt>
+                <dd class="col-sm-8">
+                    <span class="badge 
+                        {% if task.priority == 'Alta' %}
+                            bg-danger
+                        {% elseif task.priority == 'Mitjana' %}
+                            bg-warning text-dark
+                        {% else %}
+                            bg-success
+                        {% endif %}
+                        ">
+                        {{ task.priority }}
+                    </span>
+                </dd>
+
+                <dt class="col-sm-4">Hores estimades:</dt>
+                <dd class="col-sm-8">{{ task.hours }}</dd>
+
+                <dt class="col-sm-4">Data de creació:</dt>
+                <dd class="col-sm-8">{{ task.createdAt|date('d/m/Y H:i') }}</dd>
+            </dl>
+        </div>
+
+        <div class="card-footer bg-light d-flex flex-wrap gap-2 justify-content-between">
+            <a href="{{ path('app_home') }}" class="btn btn-secondary">← Tornar a la llista</a>
+
+            {% if app.user and app.user.id == task.user.id %}
+                <div class="d-flex gap-2">
+                    <a href="{{ path('app_task_edit', {'id': task.id}) }}" class="btn btn-primary">✏️ Editar</a>
+                    <form method="post" action="{{ path('app_task_delete', {'id': task.id}) }}" 
+                          onsubmit="return confirm('Estàs segur que vols eliminar aquesta tasca?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ task.id) }}">
+                        <button type="submit" class="btn btn-danger">🗑️ Eliminar</button>
+                    </form>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Llista de Tasques{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    <div class="card shadow-sm rounded-4">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center rounded-top-4">
+            <h2 class="mb-0">Llista de Tasques</h2>
+            <a href="{{ path('app_task_new') }}" class="btn btn-light btn-sm">
+                + Nova tasca
+            </a>
+        </div>
+
+        <div class="card-body p-0">
+            {% if tasks is not empty %}
+                <div class="list-group list-group-flush">
+                    {% for task in tasks %}
+                        <a href="{{ path('app_task_show', {'id': task.id}) }}"
+                           class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-0">{{ task.title }}</h6>
+                                <small class="text-muted">Prioritat:</small>
+                            </div>
+                            <span class="badge {% if task.priority == 'Alta' %}bg-danger
+                                              {% elseif task.priority == 'Mitjana' %}bg-warning text-dark
+                                              {% else %}bg-success{% endif %} rounded-pill">
+                                {{ task.priority }}
+                            </span>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-info m-3 mb-4 rounded-3">
+                    No hi ha tasques disponibles.
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="card-footer text-muted text-end">
+            Total: {{ tasks|length }} tasca{{ tasks|length == 1 ? '' : 's' }}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registro{% endblock %}
+
+{% block body %}
+<div class="min-vh-100 d-flex align-items-center justify-content-center bg-light px-3">
+    <div class="w-100" style="max-width: 480px;">
+        {% for flash_error in app.flashes('verify_email_error') %}
+            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+        {% endfor %}
+
+        <div class="card shadow rounded-4 p-4">
+            <h1 class="text-center text-primary mb-4">Crear cuenta</h1>
+
+            {{ form_start(registrationForm, {
+                'attr': {
+                    'class': 'needs-validation',
+                    'novalidate': 'novalidate'
+                }
+            }) }}
+
+            <div class="mb-3">
+                {{ form_label(registrationForm.email, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(registrationForm.email) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(registrationForm.plainPassword, 'Contraseña', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(registrationForm.plainPassword) }}
+            </div>
+
+            <div class="d-grid mb-3">
+                <button type="submit" class="btn btn-primary">Registrarse</button>
+            </div>
+
+            {{ form_end(registrationForm) }}
+
+            <div class="text-center mt-3">
+                <p class="mb-0">¿Ya tienes una cuenta?</p>
+                <a href="{{ path('app_login') }}" class="btn btn-outline-secondary btn-sm mt-2">Iniciar sesión</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

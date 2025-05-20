@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Detalls de l'Usuari - {{ user.email }}{% endblock %}
+
+{% block body %}
+    <h1>{{ user.email }}</h1>
+    <p><strong>Rols:</strong> {{ user.roles|join(', ') }}</p>
+    <p><strong>Verificat:</strong> {{ user.isVerified ? 'Sí' : 'No' }}</p>
+    <a href="{{ path('app_user_index') }}">Tornar a la llista</a>
+{% endblock %}
